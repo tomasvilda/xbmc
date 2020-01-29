@@ -43,6 +43,16 @@ static int ToggleState(const std::vector<std::string>& params)
   return 0;
 }
 
+/*! \brief Send custom CEC command
+ *  \param params (ignored)
+ */
+static int Send(const std::vector<std::string>& params)
+{
+  CApplicationMessenger::GetInstance().PostMsg(TMSG_CECSEND, 0, -1, nullptr, params[0]);
+
+  return 0;
+}
+
 // Note: For new Texts with comma add a "\" before!!! Is used for table text.
 //
 /// \page page_List_of_built_in_functions
@@ -69,6 +79,12 @@ static int ToggleState(const std::vector<std::string>& params)
 ///     ,
 ///     Toggle state of playing device via a CEC peripheral
 ///   }
+///   \table_row2_l{
+///     <b>`CECSend`</b>
+///     ,
+///     Send custom command via a CEC peripheral
+///   }
+
 ///  \table_end
 ///
 
@@ -77,6 +93,7 @@ CBuiltins::CommandMap CCECBuiltins::GetOperations() const
   return {
            {"cectogglestate",    {"Toggle state of playing device via a CEC peripheral", 0, ToggleState}},
            {"cecactivatesource", {"Wake up playing device via a CEC peripheral", 0, ActivateSource}},
-           {"cecstandby",        {"Put playing device on standby via a CEC peripheral", 0, Standby}}
+           {"cecstandby",        {"Put playing device on standby via a CEC peripheral", 0, Standby}},
+           {"cecsend",           {"Send custom CEC command via a CEC peripheral", 1, Send}}
          };
 }

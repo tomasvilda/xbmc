@@ -1761,3 +1761,12 @@ bool CPeripheralCecAdapter::ToggleDeviceState(CecStateChange mode /*= STATE_SWIT
 
   return false;
 }
+
+void CPeripheralCecAdapter::CECSend(const char* cecCommand)
+{
+    CSingleLock lock(m_critSection);
+    CLog::Log(LOGDEBUG, "%s - sending custom CEC command %s", __FUNCTION__, cecCommand);
+    cec_command bytes = m_cecAdapter->CommandFromString(cecCommand);
+    bytes.transmit_timeout = 0;
+    m_cecAdapter->Transmit(bytes);
+}

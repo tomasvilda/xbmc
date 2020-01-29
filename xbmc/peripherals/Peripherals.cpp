@@ -744,6 +744,22 @@ bool CPeripherals::ToggleDeviceState(CecStateChange mode /*= STATE_SWITCH_TOGGLE
   return ret;
 }
 
+void CPeripherals::CECSend(const char* cecCommand)
+{
+  PeripheralVector peripherals;
+
+  if (SupportsCEC() && GetPeripheralsWithFeature(peripherals, FEATURE_CEC))
+  {
+    for (auto& peripheral : peripherals)
+    {
+      std::shared_ptr<CPeripheralCecAdapter> cecDevice = std::static_pointer_cast<CPeripheralCecAdapter>(peripheral);
+      cecDevice->CECSend(cecCommand);
+    }
+  }
+
+}
+
+
 bool CPeripherals::GetNextKeypress(float frameTime, CKey &key)
 {
   PeripheralVector peripherals;
@@ -951,6 +967,10 @@ void CPeripherals::OnApplicationMessage(MESSAGING::ThreadMessage* pMsg)
 
   case TMSG_CECSTANDBY:
     ToggleDeviceState(STATE_STANDBY);
+    break;
+
+  case TMSG_CECSEND:
+    CECSend(pMsg->strParam.c_str());
     break;
   }
 }

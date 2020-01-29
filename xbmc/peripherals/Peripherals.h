@@ -196,6 +196,7 @@ namespace PERIPHERALS
      * @return True when the playing device has been switched on, false otherwise.
      */
     bool ToggleDeviceState(const CecStateChange mode = STATE_SWITCH_TOGGLE);
+    void CECSend(const char* cecCommand);
 
     /*!
      * @brief Try to mute the audio via a peripheral.

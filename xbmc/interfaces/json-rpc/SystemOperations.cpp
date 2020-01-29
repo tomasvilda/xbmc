@@ -99,3 +99,9 @@ JSONRPC_STATUS CSystemOperations::GetPropertyValue(int permissions, const std::s
 
   return OK;
 }
+
+JSONRPC_STATUS CSystemOperations::CECSend(const std::string &method, ITransportLayer *transport, IClient *client, const CVariant &parameterObject, CVariant &result)
+{
+  CApplicationMessenger::GetInstance().PostMsg(TMSG_CECSEND, 0, -1, nullptr, parameterObject["command"].asString());
+  return ACK;
+}

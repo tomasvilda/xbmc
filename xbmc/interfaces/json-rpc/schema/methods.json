@@ -2321,6 +2321,16 @@
     "params": [],
     "returns": "string"
   },
+  "System.CECSend": {
+    "type": "method",
+    "description": "Send custom CEC command via CEC device",
+    "transport": "Response",
+    "permission": "ControlSystem",
+    "params": [
+      { "name": "command", "type": "string", "required": true, "description": "custom CEC command to send via CEC device" }
+    ],
+    "returns": "string"
+  },
   "Input.SendText": {
     "type": "method",
     "description": "Send a generic (unicode) text",
